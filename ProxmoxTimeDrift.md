@@ -79,6 +79,7 @@ graph TD
     C -->|Virtual Bridge| E(Stratum 5: RHEL VM / ForRad Weather)
 
 
+
       ^* (Current System Peer): The host successfully selected 192.168.1.1 as its authoritative time source.
 
       Stratum 3: The OpenWrt router is acting as a Stratum 3 server (likely pulling from a Stratum 2 internet source), making the Proxmox host a Stratum 4 client.
