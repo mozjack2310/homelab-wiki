@@ -77,9 +77,11 @@ graph TD
     B -->|LAN| C(Stratum 4: Proxmox PVE Host)
     B -->|LAN| D(Stratum 4: GS108T Core & GS110TP Access Switches)
     C -->|Virtual Bridge| E(Stratum 5: RHEL VM / ForRad Weather)
+```
+
 This output is a great real-world example of NTP Stratum hierarchy in action:
 
-^* (Current System Peer): The host successfully selected 192.168.1.1 as its authoritative time source.
+^^ (Current System Peer): The host successfully selected 192.168.1.1 as its authoritative time source.
 
 Stratum 3: The OpenWrt router is acting as a Stratum 3 server (likely pulling from a Stratum 2 internet source), making the Proxmox host a Stratum 4 client.
 
@@ -88,4 +90,7 @@ Finally, checking timedatectl status confirmed the fix:
     System clock synchronized: yes
 
 By keeping the time sync localized to the gateway, external NTP traffic is reduced, and it ensures that when the core routing is eventually cut over to a pfSense firewall, the internal NTP architecture is already standardized.
+
+```
+
 ```
