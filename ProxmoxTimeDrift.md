@@ -1,5 +1,5 @@
 ---
-title: TIL: Fixing Proxmox Time Drift with a Local NTP Source
+title: "TIL: Fixing Proxmox Time Drift with a Local NTP Source"
 date: 2026-03-17
 category: [NTP, Time Synchronization, Proxmox]
 tags: [ntp, proxmox, openwrt, ccna, system clock]
