@@ -137,3 +137,5 @@ Run the pipeline from the activated virtual environment:
     python weather_pipeline.py
 
 Verification: Confirm the timestamped .json file is present in the AWS S3 Console. Note that clicking the public object URL will result in an AccessDenied error by design. Data must be viewed via a Pre-Signed URL or an authenticated frontend API call.
+
+---
