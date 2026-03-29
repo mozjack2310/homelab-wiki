@@ -1,12 +1,22 @@
 ---
-title: Cloud Data Engineering: Serverless NWS Weather Pipeline
+title: "Cloud Data Engineering: Serverless NWS Weather Pipeline"
 date: 2026-03-28
 category: [Cloud Architecture, Automation & Scripting]
-tags: [aws, s3, iam, python, boto3, api-integration, serverless, national-weather-service]
+tags:
+  [
+    aws,
+    s3,
+    iam,
+    python,
+    boto3,
+    api-integration,
+    serverless,
+    national-weather-service,
+  ]
 status: Deployed / Verified
 ---
 
-# Engineering Log: Cloud Data Engineering: Serverless NWS Weather Pipeline
+# Engineering Log: "Cloud Data Engineering: Serverless NWS Weather Pipeline"
 
 ## Objective
 
