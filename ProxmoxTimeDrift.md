@@ -17,6 +17,7 @@ status: Resolved
 ## 1. The Baseline (The Control)
 
 - **Expected State:** All infrastructure within the lab environment (hypervisors, core, and access switches) should synchronize system clocks with the local network gateway acting as the authoritative NTP server.
+
 - **Current State:** Verified that the downstream network switches are successfully pulling time from the gateway. The time drift is isolated strictly to the Proxmox (PVE) hypervisor, ruling out a network-wide NTP broadcast issue.
 
 ## 2. The Symptoms

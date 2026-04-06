@@ -1,8 +1,19 @@
 ---
 title: Network Automation CCNA First Attempt
 date: 2026-03-28
-category: Networking, Automation, VLANs
-tags: networking, automation, python, CML, Cisco, CCNA 200-301 v1.1, vlans, SSH, scripting
+category: [Networking, Automation, VLANs]
+tags:
+  [
+    networking,
+    automation,
+    python,
+    CML,
+    Cisco,
+    CCNA 200-301 v1.1,
+    vlans,
+    SSH,
+    scripting,
+  ]
 status: Deployed / Verified
 ---
 

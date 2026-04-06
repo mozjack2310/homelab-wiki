@@ -1,8 +1,9 @@
 ---
 title: Mitigating Bufferbloat with pfSense and FQ_CODEL
 date: 2026-03-27
-category: Networking, pfSense, Traffic Shaper, Limiters
-tags: FQ_CODEL, Traffic Shaping, pfSense, bufferbloat, latency, CCNA 200-301 v1.1
+category: [Networking, pfSense, Traffic Shaper, Limiters]
+tags:
+  [FQ_CODEL, Traffic Shaping, pfSense, bufferbloat, latency, CCNA 200-301 v1.1]
 status: Resolved
 ---
 
