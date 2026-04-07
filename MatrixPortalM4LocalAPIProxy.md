@@ -91,6 +91,14 @@ Root Cause: Enterprise Linux utilizes SELinux, which strictly forbids background
 
 Solution: 1. Migrated the project directory to /opt/weather-proxy/. 2. Transferred folder ownership back to the service user: sudo chown -R user:user /opt/weather-proxy. 3. Reset the SELinux security contexts to match the /opt/ directory policies: sudo restorecon -Rv /opt/weather-proxy.
 
+## 6. Upstream API Outages (502 / 504 Gateway Errors)
+
+Symptom: The MatrixPortal would sporadically crash and freeze when the Open-Meteo backend database experienced high load or timeout issues, resulting in the RHEL proxy throwing a generic 500 Internal Server Error to the embedded device.
+
+Root Cause: The original Python proxy blindly attempted to parse the JSON response. When Open-Meteo returned HTML error pages (502/504) instead of JSON, the requests library triggered a fatal Python KeyError or ConnectionError.
+
+Solution: Hardened the weather_proxy.py script with explicit status code validation (if response.status_code != 200:) and a global try/except block. Instead of crashing, the proxy now catches upstream timeouts, suppresses the Python exception, and serves a clean {"temperature": "ERR"} payload to the MatrixPortal. This allows the hardware to fail gracefully, wait 60 seconds, and retry without requiring a manual hardware reboot.
+
 ---
 
 ## 📄 Next Steps / Future Enhancements:
