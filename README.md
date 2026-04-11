@@ -37,7 +37,8 @@ Details on routing, switching, and security.
 
 - **Firewall/Router:** pfSense (Virtualized via Proxmox)
 
-- **VLANs:** \* `VLAN 10`: Management
+- **VLANs:**
+  - `VLAN 10`: Management
   - `VLAN 20`: Servers / VMs
   - `VLAN 30`: IoT / Smart Home Devices
 
