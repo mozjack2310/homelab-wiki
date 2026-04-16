@@ -29,7 +29,7 @@ This infrastructure will securely house the cloud backend for the ForRad applica
 
 ---
 
-## Architecture & Security Standards
+# Architecture & Security Standards
 
     Authentication Method: AWS IAM Identity Center via AWS CLI v2.
 
@@ -41,24 +41,29 @@ This infrastructure will securely house the cloud backend for the ForRad applica
 
 ## Implementation Steps
 
-1. Account Organization
-   Deployed AWS Organizations from the root account to enable centralized policy management.
+### 1. Account Organization
 
-   Enabled IAM Identity Center in the us-east-1 (N. Virginia) region.
+- Deployed AWS Organizations from the root account to enable centralized policy management.
 
-2. Identity & Access Provisioning
-   Provisioned a primary human administrative User in the Identity Center directory.
+- Enabled IAM Identity Center in the us-east-1 (N. Virginia) region.
 
-   Registered a physical Yubikey as the primary MFA device.
+### 2. Identity & Access Provisioning
 
-   Created a Permission Set granting AdministratorAccess with a defined session duration limit.
+- Provisioned a primary human administrative User in the Identity Center directory.
 
-   Mapped the human User to the primary AWS Account and bound it to the AdministratorAccess Permission Set.
+- Registered a physical Yubikey as the primary MFA device.
 
-3. Local Environment Configuration
-   Removed legacy plain-text access keys from ~/.aws/credentials to prevent accidental exposure or credential harvesting.
+- Created a Permission Set granting AdministratorAccess with a defined session duration limit.
 
-Configured the local AWS CLI utilizing the interactive SSO setup (aws configure sso), inputting the following parameters:
+- Mapped the human User to the primary AWS Account and bound it to the AdministratorAccess Permission Set.
+
+### 3. Local Environment Configuration
+
+- Removed legacy plain-text access keys from ~/.aws/credentials to prevent accidental exposure or credential harvesting.
+
+- Configured the local AWS CLI utilizing the interactive SSO setup (aws configure sso), inputting the following parameters:
+
+---
 
     Session Name: homelab
 
@@ -66,15 +71,24 @@ Configured the local AWS CLI utilizing the interactive SSO setup (aws configure 
 
     Region: us-east-1
 
-4.  Verification & Daily Workflow
-    Authentication is now handled entirely through the browser and hardware token. To initiate a secure session, the following command is executed:
+---
 
-        Bash
-        aws sso login --profile default
+### 4. Verification & Daily Workflow
+
+- Authentication is now handled entirely through the browser and hardware token. To initiate a secure session, the following command is executed:
+
+**Bash**
+
+```bash
+    aws sso login --profile default
+```
 
     Note: The CLI opens the default browser, prompts for the Yubikey touch authorization, and securely drops temporary STS credentials into the local environment.
 
-To verify the active assumed role and session ARN:
+- To verify the active assumed role and session ARN:
 
-    Bash
+```Bash
     aws sts get-caller-identity
+```
+
+---

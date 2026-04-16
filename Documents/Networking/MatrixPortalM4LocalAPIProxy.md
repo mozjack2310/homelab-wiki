@@ -41,11 +41,11 @@ To display dynamic data (temperature) on a 64x32 LED matrix using an Adafruit Ma
 
 ## 🏗️ Architecture Stack
 
-Hardware: Adafruit MatrixPortal M4, 64x32 LED Matrix, ESP32 Wi-Fi Coprocessor.
+_Hardware_: Adafruit MatrixPortal M4, 64x32 LED Matrix, ESP32 Wi-Fi Coprocessor.
 
-Network: OpenWrt AP (2.4GHz IoT VLAN) -> Netgear GS110TP -> pfSense Firewall -> RHEL 10 VM.
+_Network_: OpenWrt AP (2.4GHz IoT VLAN) -> Netgear GS110TP -> pfSense Firewall -> RHEL 10 VM.
 
-Software/OS: CircuitPython (Frontend), Enterprise Linux 10, Python 3 / Flask (Backend Proxy), systemd (Service Management).
+_Software/OS_: CircuitPython (Frontend), Enterprise Linux 10, Python 3 / Flask (Backend Proxy), systemd (Service Management).
 
 ---
 
