@@ -26,47 +26,53 @@ Automate the extraction of active weather alerts from the National Weather Servi
 
 ## 1. Architecture Overview
 
-Source: National Weather Service (NWS) API (api.weather.gov)
+- **Source:** National Weather Service (NWS) API (api.weather.gov)
 
-Compute: Local RHEL Python Environment
+- **Compute:** Local RHEL Python Environment
 
-Storage: AWS S3 (Blob Storage)
+- **Storage:** _AWS S3_ (Blob Storage)
 
-Security: AWS IAM (Zero-Trust Service Account)
+- **Security:** _AWS IAM_ (Zero-Trust Service Account)
 
 ---
 
 ## 2. AWS Infrastructure (Day 0 Configuration)
 
-A. S3 Storage Bucket
-Created a standard general-purpose bucket (sysbldr-nws-dashboard-data).
+#### **A. S3 Storage Bucket**
 
-Security: "Block all public access" enabled to prevent unauthorized internet reads.
+- Created a standard general-purpose bucket (sysbldr-nws-dashboard-data).
 
-B. IAM Service Account (nws-data-bot)
-Created a dedicated programmatic user with no console access. Secured via a custom inline JSON policy enforcing the Principle of Least Privilege. The bot is strictly limited to PutObject actions in the specific target bucket.
+- **Security** : "Block all public access" enabled to prevent unauthorized internet reads.
 
-Inline Policy (NwsDataUploadOnly):
+#### **B. IAM Service Account (nws-data-bot)**
 
-    JSON
+- Created a dedicated programmatic user with no console access.
+- Secured via a custom inline JSON policy enforcing the Principle of Least Privilege.
+- The bot is strictly limited to PutObject actions in the specific target bucket.
+
+## Inline Policy (NwsDataUploadOnly):
+
+**JSON**
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
     {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Sid": "AllowBotToPutWeatherAlerts",
-                "Effect": "Allow",
-                "Action": [
-                    "s3:PutObject"
-                ],
-                "Resource": "arn:aws:s3:::sysbldr-nws-dashboard-data/*"
-            }
-        ]
+      "Sid": "AllowBotToPutWeatherAlerts",
+      "Effect": "Allow",
+      "Action": ["s3:PutObject"],
+      "Resource": "arn:aws:s3:::sysbldr-nws-dashboard-data/*"
     }
+  ]
+}
+```
 
-C. Budget Tripwire
-Configured AWS Budgets with a strict $1.00 monthly threshold.
+#### **C. Budget Tripwire**
 
-Alerts route to primary email at 85%, 100%, and forecasted 100% of the threshold.
+- Configured AWS Budgets with a strict $1.00 monthly threshold.
+
+- Alerts route to primary email at 85%, 100%, and forecasted 100% of the threshold.
 
 ---
 
@@ -74,36 +80,32 @@ Alerts route to primary email at 85%, 100%, and forecasted 100% of the threshold
 
 This script requires the boto3 and requests libraries. It relies on the AWS CLI (aws configure) to silently resolve the IAM Access Keys from the local environment.
 
-    Python
+```python
     import json
     import requests
     import boto3
     from datetime import datetime
 
-# ==========================================
-
+## ==========================================
 # CONFIGURATION
-
-# ==========================================
+## ==========================================
 
 BUCKET_NAME = 'sysbldr-nws-dashboard-data'
 
-# NWS strictly requires a custom User-Agent
+## NWS strictly requires a custom User-Agent
 
 NWS_HEADERS = {
 'User-Agent': '(HomelabWeatherDashboard, sysbldr1220711@example.com)',
 'Accept': 'application/geo+json'
 }
 
-# Target: Active alerts for Alabama
+## Target: Active alerts for Alabama
 
 NWS_URL = 'https://api.weather.gov/alerts/active?area=AL'
 
-# ==========================================
-
+## ==========================================
 # EXECUTION
-
-# ==========================================
+## ==========================================
 
     def push_weather_to_s3():
         try:
@@ -135,17 +137,25 @@ NWS_URL = 'https://api.weather.gov/alerts/active?area=AL'
 
     if __name__ == "__main__":
         push_weather_to_s3()
+```
 
 ---
 
 ## 4. Execution & Verification
 
+### Execution:
+
 Run the pipeline from the activated virtual environment:
 
-    Bash
+```Bash
     source .venv/bin/activate
     python weather_pipeline.py
+```
 
-Verification: Confirm the timestamped .json file is present in the AWS S3 Console. Note that clicking the public object URL will result in an AccessDenied error by design. Data must be viewed via a Pre-Signed URL or an authenticated frontend API call.
+---
+
+### Verification:
+
+Confirm the timestamped .json file is present in the AWS S3 Console. Note that clicking the public object URL will result in an AccessDenied error by design. Data must be viewed via a Pre-Signed URL or an authenticated frontend API call.
 
 ---
